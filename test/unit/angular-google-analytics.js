@@ -16,7 +16,7 @@ describe('angular-google-analytics', function(){
 
     beforeEach(inject(function(Analytics, $rootScope) {
       _Analytics = Analytics;
-      spyOn(_Analytics, "push");
+      spyOn(_Analytics, "_push");
       _$rootScope = $rootScope;
     }));
 
@@ -25,16 +25,16 @@ describe('angular-google-analytics', function(){
     });
 
     it('should generate pageTracks', function() {
-      expect(_Analytics.push).not.toHaveBeenCalled();
+      expect(_Analytics._push).not.toHaveBeenCalled();
       _Analytics.trackPage('test');
-      expect(_Analytics.push.callCount).toBe(1);
+      expect(_Analytics._push.callCount).toBe(1);
       _Analytics.trackEvent('test');
-      expect(_Analytics.push.callCount).toBe(2);
+      expect(_Analytics._push.callCount).toBe(2);
     });
 
     it('should generate an trackpage to routeChangeSuccess', function() {
       _$rootScope.$broadcast('$routeChangeSuccess');
-      expect(_Analytics.push.callCount).toBe(1);
+      expect(_Analytics._push.callCount).toBe(1);
     });
   });
 
@@ -46,13 +46,13 @@ describe('angular-google-analytics', function(){
 
     beforeEach(inject(function(Analytics, $rootScope) {
       _Analytics = Analytics;
-      spyOn(_Analytics, "push");
+      spyOn(_Analytics, "_push");
       _$rootScope = $rootScope;
     }));
 
     it('should NOT generate an trackpage to routeChangeSuccess', function() {
       _$rootScope.$broadcast('$routeChangeSuccess');
-      expect(_Analytics.push).not.toHaveBeenCalled();
+      expect(_Analytics._push).not.toHaveBeenCalled();
     });
   });
 

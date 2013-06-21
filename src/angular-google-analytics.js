@@ -11,12 +11,10 @@ angular.module('angular-google-analytics', [])
   // config methods
   this.setAccount = function(id) {
     accountId = id;
-    return true;
   };
 
-  this.setAutoTrackRoutes = function(doTrack) {
-    trackRoutes = doTrack;
-    return true;
+  this.setAutoTrackRoutes = function(_trackRoutes) {
+    trackRoutes = _trackRoutes;
   };
 
   // public service
@@ -25,7 +23,7 @@ angular.module('angular-google-analytics', [])
     function _createScriptTag() {
       // inject the google analytics tag
       if (!accountId) return;
-      $window._gaq = [];
+      $window._gaq = $window._gaq || [];
       $window._gaq.push(['_setAccount', accountId]);
       if (trackRoutes) $window._gaq.push(['_trackPageview']);
       (function() {
@@ -38,14 +36,14 @@ angular.module('angular-google-analytics', [])
     }
 
     // for testing
-    this.push = function() {
+    this._push = function() {
       $window._gaq && $window._gaq.push(arguments);
     };
     this.trackPage = function(url) {
-      this.push(['_trackPageview', url]);
+      this._push(['_trackPageview', url]);
     };
     this.trackEvent = function(category, action, label, value) {
-      this.push(['_trackEvent', category, action, label, value]);
+      this._push(['_trackEvent', category, action, label, value]);
     };
 
     // creates the ganalytics tracker
