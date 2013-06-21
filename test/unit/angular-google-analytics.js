@@ -53,6 +53,25 @@ describe('angular-google-analytics', function () {
         expect(Analytics.push).not.toHaveBeenCalled();
       }));
     });
+
+    describe('push', function () {
+      it("should be a bypass to window._gaq.push", function () {
+        var mockGaq = { push: jasmine.createSpy() };
+
+        inject(function ($window) {
+          $window._gaq = mockGaq;
+        });
+
+        inject(function (Analytics) {
+          Analytics.push("test");
+        });
+
+        expect(mockGaq.push.calls.length).toBe(3);
+        expect(mockGaq.push.calls[0].args[0]).toEqual(["_setAccount", "UA-XXXXXX-xx"]);
+        expect(mockGaq.push.calls[1].args[0]).toEqual(["_trackPageview"]);
+        expect(mockGaq.push.calls[2].args[0]).toEqual("test");
+      });
+    });
   });
 
 });
