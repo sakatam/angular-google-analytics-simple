@@ -1,4 +1,4 @@
-/* global module, angular, console, describe, expect, it, before, beforeEach, inject, spyOn, AnalyticsProvider */
+/* global module, angular, console, describe, expect, it, before, beforeEach, inject, spyOn, analyticsProvider */
 
 'use strict';
 
@@ -8,49 +8,49 @@ describe('angular-google-analytics', function () {
   describe('instantiation', function () {
     it('should throw', function () {
       inject(function ($injector) {
-        expect(function () { $injector.get("Analytics"); }).toThrow();
+        expect(function () { $injector.get("analytics"); }).toThrow();
       });
     });
 
     it('should inject the GA script', function () {
-      module(function (AnalyticsProvider) {
-        AnalyticsProvider.setAccount('UA-XXXXXX-xx');
+      module(function (analyticsProvider) {
+        analyticsProvider.setAccount('UA-XXXXXX-xx');
       });
 
-      inject(function (Analytics) {
+      inject(function (analytics) {
         expect(document.querySelectorAll("script[src='http://www.google-analytics.com/ga.js']").length).toBe(1);
       });
     });
   });
 
   describe("tracking methods", function () {
-    beforeEach(module(function (AnalyticsProvider) {
-      AnalyticsProvider.setAccount('UA-XXXXXX-xx');
+    beforeEach(module(function (analyticsProvider) {
+      analyticsProvider.setAccount('UA-XXXXXX-xx');
     }));
 
     describe('automatic trackPages', function () {
-      beforeEach(inject(function (Analytics) {
-        spyOn(Analytics, "push");
+      beforeEach(inject(function (analytics) {
+        spyOn(analytics, "push");
       }));
 
-      it('should generate an trackpage to routeChangeSuccess', inject(function (Analytics, $rootScope) {
+      it('should generate an trackpage to routeChangeSuccess', inject(function (analytics, $rootScope) {
         $rootScope.$broadcast('$routeChangeSuccess');
-        expect(Analytics.push.callCount).toBe(1);
+        expect(analytics.push.callCount).toBe(1);
       }));
     });
 
     describe('NOT automatic trackPages', function() {
-      beforeEach(module(function (AnalyticsProvider) {
-        AnalyticsProvider.setAutoTrackRoutes(false);
+      beforeEach(module(function (analyticsProvider) {
+        analyticsProvider.setAutoTrackRoutes(false);
       }));
 
-      beforeEach(inject(function (Analytics) {
-        spyOn(Analytics, "push");
+      beforeEach(inject(function (analytics) {
+        spyOn(analytics, "push");
       }));
 
-      it('should NOT generate an trackpage to routeChangeSuccess', inject(function (Analytics, $rootScope) {
+      it('should NOT generate an trackpage to routeChangeSuccess', inject(function (analytics, $rootScope) {
         $rootScope.$broadcast('$routeChangeSuccess');
-        expect(Analytics.push).not.toHaveBeenCalled();
+        expect(analytics.push).not.toHaveBeenCalled();
       }));
     });
 
@@ -62,8 +62,8 @@ describe('angular-google-analytics', function () {
           $window._gaq = mockGaq;
         });
 
-        inject(function (Analytics) {
-          Analytics.push("test");
+        inject(function (analytics) {
+          analytics.push("test");
         });
 
         expect(mockGaq.push.calls.length).toBe(3);

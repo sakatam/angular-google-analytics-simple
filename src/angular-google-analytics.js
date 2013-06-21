@@ -3,7 +3,7 @@
 'use strict';
 
 angular.module('angular-google-analytics', [])
-.provider('Analytics', function() {
+.provider('analytics', function() {
   var trackRoutes = true,
       account;
 
