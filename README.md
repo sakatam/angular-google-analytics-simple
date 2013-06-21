@@ -14,19 +14,19 @@ Proudly brought to you by the [@revolunet](http://twitter.com/revolunet) team.
 
 ```js
 var app = angular.module('app', ['angular-google-analytics'])
-    .config(function(AnalyticsProvider, function() {
+    .config(function(analyticsProvider, function() {
         // initial configuration
-        AnalyticsProvider.setAccount('UA-XXXXX-xx');
+        analyticsProvider.setAccount('UA-XXXXX-xx');
 
         // track all routes (or not)
-        AnalyticsProvider.trackPages(true);
+        analyticsProvider.trackPages(true);
     }))
     .controller('SampleController', function(Analytic) {
         // create a new pageview event
-        Analytic.trackPage('/video/detail/XXX');
+        Analytic.push(['_trackPageview', '/video/detail/XXX']);
 
         // create a new tracking event
-        Analytic.trackEvent('video', 'play', 'django.mp4');
+        Analytic.push(['_trackEvent', 'video', 'play', 'django.mp4']);
     });
 ```
 
@@ -34,9 +34,9 @@ var app = angular.module('app', ['angular-google-analytics'])
 
 ```js
 // setup your account
-AnalyticsProvider.setAccount('UA-XXXXX-xx');
+analyticsProvider.setAccount('UA-XXXXX-xx');
 // automatic route tracking (default=true)
-AnalyticsProvider.trackPages(false);
+analyticsProvider.trackPages(false);
 ```
 
 ## Licence
