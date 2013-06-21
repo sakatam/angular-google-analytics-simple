@@ -8,15 +8,13 @@ angular.module('angular-google-analytics', [])
       trackRoutes = true,
       accountId;
 
-  this._logs = [];
-
   // config methods
   this.setAccount = function(id) {
     accountId = id;
     return true;
   };
 
-  this.trackPages = function(doTrack) {
+  this.setAutoTrackRoutes = function(doTrack) {
     trackRoutes = doTrack;
     return true;
   };
@@ -38,44 +36,30 @@ angular.module('angular-google-analytics', [])
       })();
       created = true;
     }
-    this._log = function() {
-      // for testing
-      this._logs.push(arguments);
+
+    // for testing
+    this.push = function() {
+      $window._gaq && $window._gaq.push(arguments);
     };
-    this._trackPage = function(url) {
-      if (trackRoutes && $window._gaq) {
-        $window._gaq.push(['_trackPageview', url]);
-        this._log('_trackPageview', arguments);
-      }
+    this.trackPage = function(url) {
+      this.push(['_trackPageview', url]);
     };
-    this._trackEvent = function(category, action, label, value) {
-      if ($window._gaq) {
-        $window._gaq.push(['_trackEvent', category, action, label, value]);
-        this._log('trackEvent', arguments);
-      }
+    this.trackEvent = function(category, action, label, value) {
+      this.push(['_trackEvent', category, action, label, value]);
     };
 
     // creates the ganalytics tracker
     _createScriptTag();
 
-    var me = this;
-
     // activates page tracking
-    if (trackRoutes) $rootScope.$on('$routeChangeSuccess', function(scope, current, previous) {
-      me._trackPage($location.path());
-    });
+    if (trackRoutes) {
+      $rootScope.$on(
+        '$routeChangeSuccess',
+        (function () { this.trackPage($location.path()); }).bind(this)
+      );
+    }
 
-    return {
-      _logs: me._logs,
-      trackPage: function(url) {
-        // add a page event
-        me._trackPage(url);
-      },
-      trackEvent: function(category, action, label, value) {
-        // add an action event
-        me._trackEvent(category, action, label, value);
-      }
-    };
+    return this;
   }];
 });
 
