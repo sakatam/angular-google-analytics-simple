@@ -21,12 +21,12 @@ var app = angular.module('app', ['angular-google-analytics'])
         // track all routes (or not)
         analyticsProvider.trackPages(true);
     }))
-    .controller('SampleController', function(Analytic) {
+    .controller('SampleController', function(analytics) {
         // create a new pageview event
-        Analytic.push(['_trackPageview', '/video/detail/XXX']);
+        analytics.push(['_trackPageview', '/video/detail/XXX']);
 
         // create a new tracking event
-        Analytic.push(['_trackEvent', 'video', 'play', 'django.mp4']);
+        analytics.push(['_trackEvent', 'video', 'play', 'django.mp4']);
     });
 ```
 
