@@ -38,10 +38,6 @@ angular.module('angular-google-analytics', [])
 
     this.push(['_setAccount', account]);
 
-    if (trackRoutes) {
-      this.push(['_trackPageview']);
-    }
-
     // activates page tracking
     if (trackRoutes) {
       $rootScope.$on(
