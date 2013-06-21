@@ -2,7 +2,7 @@
   "author": "revolunet",
   "name": "angular-google-analytics",
   "description": "East Analytics for your AngularJS application",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "homepage": "https://github.com/revolunet/angular-google-analytics",
   "repository": {
     "type": "git",
