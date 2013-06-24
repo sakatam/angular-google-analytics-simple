@@ -2,6 +2,8 @@
 
 Super simple AngularJS service for Google Analytics tracker.
 
+Forked out from https://github.com/revolunet/angular-google-analytics
+
 ## Features
 + Transparent access to the "_gaq" object
 + Automatic page tracking

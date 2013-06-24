@@ -1,12 +1,12 @@
 {
-  "author": "revolunet",
-  "name": "angular-google-analytics",
-  "description": "East Analytics for your AngularJS application",
-  "version": "1.0.1",
-  "homepage": "https://github.com/revolunet/angular-google-analytics",
+  "author": "sakatam",
+  "name": "angular-google-analytics-simple",
+  "description": "Super simple AngularJS service for Google Analytics tracker",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sakatam/angular-google-analytics-simple",
   "repository": {
     "type": "git",
-    "url": "git://github.com/revolunet/angular-google-analytics.git"
+    "url": "git://github.com/sakatam/angular-google-analytics-simple.git"
   },
   "main": "./dist/angular-google-analytics.js",
   "dependencies": {
