@@ -1,12 +1,12 @@
-/* global module, angular, console, describe, expect, it, before, beforeEach, inject, spyOn, analyticsProvider */
+/* global module, angular, console, describe, expect, it, jasmine, before, beforeEach, inject, spyOn, analyticsProvider */
 
 'use strict';
 
 describe('angular-google-analytics', function () {
   beforeEach(module('angular-google-analytics'));
 
-  describe('instantiation', function () {
-    it('should throw', function () {
+  describe('initialize', function () {
+    it('should throw if account is not set', function () {
       inject(function ($injector) {
         expect(function () { $injector.get("analytics"); }).toThrow();
       });
@@ -18,6 +18,8 @@ describe('angular-google-analytics', function () {
       });
 
       inject(function (analytics) {
+        expect(document.querySelectorAll("script[src='http://www.google-analytics.com/ga.js']").length).toBe(0);
+        analytics.initialize();
         expect(document.querySelectorAll("script[src='http://www.google-analytics.com/ga.js']").length).toBe(1);
       });
     });
@@ -30,6 +32,7 @@ describe('angular-google-analytics', function () {
 
     describe('automatic trackPages', function () {
       beforeEach(inject(function (analytics) {
+        analytics.initialize();
         spyOn(analytics, "push");
       }));
 
@@ -41,10 +44,11 @@ describe('angular-google-analytics', function () {
 
     describe('NOT automatic trackPages', function() {
       beforeEach(module(function (analyticsProvider) {
-        analyticsProvider.setAutoTrackRoutes(false);
+        analyticsProvider.autoTrack(false);
       }));
 
       beforeEach(inject(function (analytics) {
+        analytics.initialize();
         spyOn(analytics, "push");
       }));
 
@@ -63,6 +67,7 @@ describe('angular-google-analytics', function () {
         });
 
         inject(function (analytics) {
+          analytics.initialize();
           analytics.push("test");
         });
 

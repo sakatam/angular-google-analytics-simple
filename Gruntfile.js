@@ -81,76 +81,11 @@ module.exports = function(grunt) {
           $: false
         }
       }
-    },
-    // watch: {
-    //   files: '<config:jshint.files>',
-    //   tasks: 'default'
-    // },
-    karma: {
-      test: {
-        options: {
-          reporters: ['dots'],
-          singleRun: true
-        }
-      },
-      server: {
-        options: {
-          singleRun: false
-        }
-      },
-      options: {
-        configFile: 'test/karma.conf.js'
-      }
     }
   });
 
-  // Load the plugin that provides the "jshint" task.
   grunt.loadNpmTasks('grunt-contrib-jshint');
-
-  // Load the plugin that provides the "concat" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
-
-  // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
-
-  // Load the plugin that provides the "watch" task.
-  //grunt.loadNpmTasks('grunt-contrib-watch');
-
   grunt.loadNpmTasks('grunt-release');
-  grunt.loadNpmTasks('grunt-conventional-changelog');
-
-  grunt.registerTask('stage', 'git add files before running the release task', function () {
-    var files = this.options().files;
-    grunt.util.spawn({
-      cmd: process.platform === 'win32' ? 'git.cmd' : 'git',
-      args: ['add'].concat(files)
-    }, grunt.task.current.async());
-  });
-
-
-
-  grunt.renameTask('release', 'originalRelease');
-
-  // Default task.
-  grunt.registerTask('default', ['test']);
-
-  // Test tasks.
-  grunt.registerTask('test', ['jshint', 'karma:test']);
-  grunt.registerTask('test-server', ['karma:server']);
-
-  // Build task.
-  grunt.registerTask('build', ['test', 'concat', 'uglify', 'changelog']);
-
-  // release task
-  grunt.registerTask('release', ['build', 'changelog']);
-
-
-  // Provides the "karma" task.
-  grunt.registerMultiTask('karma', 'Starts up a karma server.', function() {
-    var done = this.async();
-    require('karma').server.start(this.options(), function(code) {
-      done(code === 0);
-    });
-  });
-
 };

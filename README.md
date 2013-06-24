@@ -1,26 +1,26 @@
-# angular-google-analytics
+# angular-google-analytics-simple
 
-A simple service that let you integrate google analytics tracker in your AngularJS applications.
+Super simple AngularJS service for Google Analytics tracker.
 
-Proudly brought to you by the [@revolunet](http://twitter.com/revolunet) team.
+## Features
++ Transparent access to the "_gaq" object
++ Automatic page tracking
 
-## features
-
- - configurable
- - automatic page tracking
- - events tracking
-
-## example
+## Example
 
 ```js
-var app = angular.module('app', ['angular-google-analytics'])
+var app = angular.module('app', ['angular-google-analytics-simple'])
     .config(function(analyticsProvider, function() {
         // initial configuration
         analyticsProvider.setAccount('UA-XXXXX-xx');
 
-        // track all routes (or not)
-        analyticsProvider.trackPages(true);
+        // automatically track all routes
+        analyticsProvider.autoTrack(true);
     }))
+    .run(function(analytics) {
+        // init the module to inject GA tag
+        analytics.initialize();
+    })
     .controller('SampleController', function(analytics) {
         // create a new pageview event
         analytics.push(['_trackPageview', '/video/detail/XXX']);
@@ -28,15 +28,6 @@ var app = angular.module('app', ['angular-google-analytics'])
         // create a new tracking event
         analytics.push(['_trackEvent', 'video', 'play', 'django.mp4']);
     });
-```
-
-## configuration
-
-```js
-// setup your account
-analyticsProvider.setAccount('UA-XXXXX-xx');
-// automatic route tracking (default=true)
-analyticsProvider.trackPages(false);
 ```
 
 ## Licence
