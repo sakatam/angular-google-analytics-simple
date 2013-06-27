@@ -3,7 +3,7 @@
 'use strict';
 
 describe('angular-google-analytics', function () {
-  beforeEach(module('angular-google-analytics'));
+  beforeEach(module('angular-google-analytics-simple'));
 
   describe('initialize', function () {
     it('should throw if account is not set', function () {
